@@ -1,4 +1,6 @@
-# Getting Started with Create React App
+# Speech recognition WEB API react app
+
+Uses Viaplay.se open data from https://content.viaplay.se/pcdash-se/film for movies infos
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
