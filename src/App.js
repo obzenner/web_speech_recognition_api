@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 
 import contentData from "./fixtures/content.json";
+
 const allMovies = contentData._embedded['viaplay:blocks'].reduce((acc, block) => {
   const allMoviesPerBlock = block._embedded && block._embedded['viaplay:products'];
   if (!allMoviesPerBlock) {
@@ -90,6 +91,7 @@ const Genre = styled.h3`
 `;
 
 const SpeechButton = styled.button`
+  display: block;
   background-color: ${props => props.active ? "red" : "#ff5bb0"};
   border-radius: 10px;
   height: 60px;
@@ -112,6 +114,26 @@ const ImagePlaceholderLogo = styled.img`
   display: block;
 `;
 
+const EmojiPlaceholder = styled.span`
+  transform: ${props => props.direction ? 'rotate(180deg)' : 'rotate(0deg)'};
+`;
+const Emoji = props => {
+  let directionClass = '';
+  if (props.direction === true) {
+    directionClass = 'rotated'
+  }
+  return <EmojiPlaceholder direction={props.direction}
+      className={'emoji' + directionClass}
+      role="img"
+      aria-label={props.label ? props.label : ""}
+      aria-hidden={props.label ? "false" : "true"}
+  >
+      {props.symbol}
+  </EmojiPlaceholder>
+}
+
+
+// Enable speech recognition
 const enableSpeechRecognition = () => {
   const genres = [
     'action',
@@ -191,7 +213,7 @@ function App() {
           recognition.stop();
           setSpeechActive(false);
         }
-        }}>Speak out your desired title!</SpeechButton>
+        }}>Speak out your desired title! <Emoji symbol="📣" label="megaphone" /></SpeechButton>
         <Genre>{genre.toUpperCase()}</Genre>
         <MovieBlock>{movies.map(movie => <Movie key={movie.name}>
           <ImagePlaceholder src={movie.value.content.images.boxart.url}></ImagePlaceholder>
